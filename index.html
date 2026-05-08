@@ -481,9 +481,9 @@
     }
 
     .hero__meta {
-      min-width: 284px;
+      min-width: 360px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       overflow: hidden;
       border-radius: var(--radius-bar);
       border: 1px solid var(--line-soft);
@@ -876,6 +876,64 @@
       color: var(--text-4);
       border-color: rgba(255, 255, 255, 0.055);
       background: rgba(255, 255, 255, 0.025);
+    }
+
+    .project-feedback {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 4px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--line-soft);
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .feedback-button {
+      min-width: 44px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-radius: var(--radius-control);
+      background: transparent;
+      color: var(--text-3);
+      cursor: pointer;
+      transition:
+        background-color var(--duration-fast) var(--ease),
+        color var(--duration-fast) var(--ease),
+        transform var(--duration-fast) var(--ease);
+    }
+
+    .feedback-button:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+    }
+
+    .feedback-button:active {
+      transform: scale(0.94);
+    }
+
+    .feedback-button.is-active[data-feedback-vote="1"] {
+      background: rgba(48, 209, 88, 0.14);
+      color: rgba(96, 222, 128, 0.98);
+    }
+
+    .feedback-button.is-active[data-feedback-vote="-1"] {
+      background: rgba(255, 80, 80, 0.10);
+      color: rgba(255, 184, 184, 0.95);
+    }
+
+    .feedback-count {
+      min-width: 1ch;
+      font-size: var(--fs-caption-1);
+      line-height: var(--lh-caption);
+      font-weight: 740;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .feedback-icon--down {
+      transform: rotate(180deg);
     }
 
     .empty-state {
@@ -1520,7 +1578,8 @@
       .project-card__title { white-space: normal; }
       .project-card__description { font-size: var(--fs-footnote); line-height: var(--lh-footnote); }
       .project-card__meta { align-items: flex-start; flex-direction: column; }
-      .meta-chip, .source-link { width: 100%; justify-content: center; }
+      .meta-chip, .source-link, .project-feedback { width: 100%; justify-content: center; }
+      .feedback-button { flex: 1 1 0; }
       .progress { max-width: 100%; }
       .project-card__aside { grid-column: 1; }
       .footer { padding-top: var(--space-6); }
@@ -1621,6 +1680,7 @@
           <div class="stat"><dt class="stat__label">Всего</dt><dd class="stat__value" id="statTotal">0</dd></div>
           <div class="stat"><dt class="stat__label">В разработке</dt><dd class="stat__value" id="statActive">0</dd></div>
           <div class="stat"><dt class="stat__label">Релизы</dt><dd class="stat__value" id="statPublished">0</dd></div>
+          <div class="stat"><dt class="stat__label">Просмотры</dt><dd class="stat__value" id="statViews">0</dd></div>
         </dl>
       </section>
 
@@ -1828,6 +1888,11 @@
     const IDEA_TOKEN_KEY = "wellqx.project-tracker.idea-token";
     const IDEA_COOLDOWN_KEY = "wellqx.project-tracker.idea-cooldown-until";
     const IDEA_LOCAL_COOLDOWN_MS = 60 * 1000;
+    const PROJECT_FEEDBACK_TOKEN_KEY = "wellqx.project-tracker.feedback-token";
+    const PROJECT_FEEDBACK_VOTES_KEY = "wellqx.project-tracker.feedback-votes";
+    const PROFILE_VIEW_TOKEN_KEY = "wellqx.project-tracker.profile-view-token";
+    const PROFILE_VIEW_OWNER_KEY = "wellqx.project-tracker.profile-view-owner";
+    const PROFILE_VIEW_STARTED_AT = Date.now();
     const SUPABASE_URL = "https://cdegwbbmoqtcjirysfwa.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_7jGZQCBowIypfhKp1mk9XA_v3rDLvFc";
     const SUPABASE_BUCKET = "project-assets";
@@ -1941,6 +2006,7 @@
         statTotal: "Всего",
         statActive: "В разработке",
         statPublished: "Релизы",
+        statViews: "Просмотры",
         projectsTitle: "Основные проекты",
         projectsShownAll: "Показаны все проекты",
         found: "найдено",
@@ -1957,6 +2023,10 @@
         openSourceFor: "Открыть исходный код проекта",
         source: "Source",
         sourceSoon: "Source позже",
+        likeProject: "Лайкнуть проект",
+        dislikeProject: "Дизлайкнуть проект",
+        likesShort: "лайки",
+        dislikesShort: "дизлайки",
         ideasSummary: "Форма и статус твоей идеи",
         ideasTitle: "Предложить идею",
         ideasText: "Опиши коротко, что хочешь увидеть. После отправки ты сможешь поправить эту же идею и следить за статусом.",
@@ -1976,7 +2046,7 @@
         ideaNoSupabase: "Идеи пока недоступны. Попробуй позже.",
         ideaLoaded: "Твоя идея загружена. Можно поправить и отправить обновление.",
         ideaSaved: "Идея отправлена. Статус появится здесь.",
-        ideaValidation: "Заполни название, понятное описание и контакт.",
+        ideaValidation: "Заполни название, короткое описание от 10 символов и контакт.",
         ideaCooldown: "Подожди минуту перед повторной отправкой.",
         ideaClosed: "Эта идея уже закрыта, правки отключены.",
         ideaStatusPending: "в ожидании",
@@ -2011,6 +2081,7 @@
         statTotal: "Total",
         statActive: "In progress",
         statPublished: "Releases",
+        statViews: "Views",
         projectsTitle: "Main projects",
         projectsShownAll: "Showing all projects",
         found: "found",
@@ -2027,6 +2098,10 @@
         openSourceFor: "Open source code for",
         source: "Source",
         sourceSoon: "Source later",
+        likeProject: "Like project",
+        dislikeProject: "Dislike project",
+        likesShort: "likes",
+        dislikesShort: "dislikes",
         ideasSummary: "Form and status for your idea",
         ideasTitle: "Suggest an idea",
         ideasText: "Briefly describe what you want to see. After sending, you can edit the same idea and track its status.",
@@ -2046,7 +2121,7 @@
         ideaNoSupabase: "Ideas are unavailable. Try again later.",
         ideaLoaded: "Your idea is loaded. You can edit it and send an update.",
         ideaSaved: "Idea sent. Its status will appear here.",
-        ideaValidation: "Fill in a title, clear description, and contact.",
+        ideaValidation: "Fill in a title, a short description of at least 10 characters, and contact.",
         ideaCooldown: "Wait a minute before sending again.",
         ideaClosed: "This idea is already closed, so edits are disabled.",
         ideaStatusPending: "pending",
@@ -2098,6 +2173,9 @@
     let currentLanguage = loadLanguage();
     let currentIdea = null;
     let adminIdeas = [];
+    let projectFeedbackStats = {};
+    let projectFeedbackVotes = loadProjectFeedbackVotes();
+    let profileViewCount = 0;
     let ideaFormStartedAt = Date.now();
 
     const state = { filter: "all", query: "" };
@@ -2142,6 +2220,7 @@
       statTotal: document.getElementById("statTotal"),
       statActive: document.getElementById("statActive"),
       statPublished: document.getElementById("statPublished"),
+      statViews: document.getElementById("statViews"),
       footer: document.querySelector(".footer"),
       adminBackdrop: document.getElementById("adminBackdrop"),
       openAdmin: document.getElementById("openAdmin"),
@@ -2248,11 +2327,27 @@
     }
 
     function getIdeaToken() {
+      return getClientToken(IDEA_TOKEN_KEY);
+    }
+
+    function getStoredIdeaToken() {
+      return getStoredToken(IDEA_TOKEN_KEY);
+    }
+
+    function getFeedbackToken() {
+      return getClientToken(PROJECT_FEEDBACK_TOKEN_KEY);
+    }
+
+    function getProfileViewToken() {
+      return getClientToken(PROFILE_VIEW_TOKEN_KEY);
+    }
+
+    function getClientToken(storageKey) {
       try {
-        let token = getStoredIdeaToken();
+        let token = getStoredToken(storageKey);
         if (!token) {
           token = `${crypto.randomUUID()}-${crypto.randomUUID()}`;
-          localStorage.setItem(IDEA_TOKEN_KEY, token);
+          localStorage.setItem(storageKey, token);
         }
         return token;
       } catch {
@@ -2260,12 +2355,27 @@
       }
     }
 
-    function getStoredIdeaToken() {
+    function getStoredToken(storageKey) {
       try {
-        return localStorage.getItem(IDEA_TOKEN_KEY) || "";
+        return localStorage.getItem(storageKey) || "";
       } catch {
         return "";
       }
+    }
+
+    function loadProjectFeedbackVotes() {
+      try {
+        const votes = JSON.parse(localStorage.getItem(PROJECT_FEEDBACK_VOTES_KEY) || "{}");
+        return votes && typeof votes === "object" ? votes : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveProjectFeedbackVotes() {
+      try {
+        localStorage.setItem(PROJECT_FEEDBACK_VOTES_KEY, JSON.stringify(projectFeedbackVotes));
+      } catch {}
     }
 
     function getIdeaStatusLabel(status) {
@@ -2316,6 +2426,27 @@
       if (lowerMessage.includes("bot check") || lowerMessage.includes("incomplete")) return t("ideaValidation");
 
       return message;
+    }
+
+    function getFeedbackStats(projectId) {
+      return projectFeedbackStats[projectId] || { likes: 0, dislikes: 0 };
+    }
+
+    function normalizeFeedbackRows(rows, includeDislikes = false) {
+      const nextStats = { ...projectFeedbackStats };
+      (rows || []).forEach(row => {
+        if (!row?.project_id) return;
+        nextStats[row.project_id] = {
+          likes: Number(row.likes || 0),
+          dislikes: includeDislikes ? Number(row.dislikes || 0) : Number(nextStats[row.project_id]?.dislikes || 0)
+        };
+      });
+      projectFeedbackStats = nextStats;
+    }
+
+    function thumbIcon(direction) {
+      const className = direction === "down" ? "icon feedback-icon--down" : "icon";
+      return `<svg class="${className}" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10v11" /><path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.5l-1.4 6A2 2 0 0 1 18.4 20H9.1a2 2 0 0 1-1.8-1.1L7 18" /><path d="M7 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3" /></svg>`;
     }
 
     function formatDate(value) {
@@ -2380,6 +2511,8 @@
       if (isLoggedIn) {
         syncAdminFieldsFromData();
         loadAdminIdeas();
+        loadProjectFeedbackStats({ admin: true });
+        markCurrentDeviceAsOwner();
         setAdminStatus("Вход выполнен", "ready");
       } else if (supabaseClient) {
         setAdminStatus("Войди, чтобы редактировать", "warning");
@@ -2526,6 +2659,92 @@
       return publicResult.data.publicUrl;
     }
 
+    async function loadProjectFeedbackStats({ admin = false } = {}) {
+      if (!supabaseClient) return;
+
+      const rpcName = admin && currentSession ? "get_project_feedback_admin" : "get_project_like_counts";
+      const { data, error } = await supabaseClient.rpc(rpcName);
+      if (error) return;
+
+      normalizeFeedbackRows(data, admin && currentSession);
+      renderProjects();
+      if (admin && currentSession) renderAdminProjectList();
+    }
+
+    async function submitProjectFeedback(projectId, vote) {
+      if (!supabaseClient || !projectId || ![1, -1].includes(vote)) return;
+
+      const { data, error } = await supabaseClient.rpc("submit_project_feedback", {
+        p_voter_token: getFeedbackToken(),
+        p_project_id: projectId,
+        p_vote: vote
+      });
+      if (error) return;
+
+      const row = Array.isArray(data) ? data[0] : data;
+      normalizeFeedbackRows(row ? [row] : []);
+
+      if (row?.current_vote === 1 || row?.current_vote === -1) {
+        projectFeedbackVotes[projectId] = row.current_vote;
+      } else {
+        delete projectFeedbackVotes[projectId];
+      }
+      saveProjectFeedbackVotes();
+      renderProjects();
+    }
+
+    async function loadProfileViewCount() {
+      if (!supabaseClient) return;
+      const { data, error } = await supabaseClient.rpc("get_profile_view_count");
+      if (error) return;
+      profileViewCount = Number(data || 0);
+      renderStats();
+    }
+
+    async function registerProfileView() {
+      if (!supabaseClient) return;
+
+      const isOwnerDevice = localStorage.getItem(PROFILE_VIEW_OWNER_KEY) === "1";
+      if (isOwnerDevice) {
+        await loadProfileViewCount();
+        return;
+      }
+
+      const { data, error } = await supabaseClient.rpc("register_profile_view", {
+        p_viewer_token: getProfileViewToken(),
+        p_started_at_ms: PROFILE_VIEW_STARTED_AT
+      });
+      if (error) return;
+
+      profileViewCount = Number(data || 0);
+      renderStats();
+    }
+
+    function queueProfileViewRegistration() {
+      window.setTimeout(registerProfileView, 1700);
+    }
+
+    async function markCurrentDeviceAsOwner() {
+      if (!supabaseClient || !currentSession) return;
+      try {
+        localStorage.setItem(PROFILE_VIEW_OWNER_KEY, "1");
+      } catch {}
+
+      const token = getStoredToken(PROFILE_VIEW_TOKEN_KEY);
+      if (!token) {
+        await loadProfileViewCount();
+        return;
+      }
+
+      const { data, error } = await supabaseClient.rpc("remove_profile_view", {
+        p_viewer_token: token
+      });
+      if (error) return;
+
+      profileViewCount = Number(data || 0);
+      renderStats();
+    }
+
     async function initSupabase() {
       if (!supabaseClient) {
         setAdminAccess(null);
@@ -2542,6 +2761,8 @@
         setAdminAccess(currentSession);
       });
       await loadRemoteData();
+      await loadProjectFeedbackStats();
+      queueProfileViewRegistration();
     }
 
     function escapeHTML(value) {
@@ -2579,6 +2800,7 @@
       refs.statLabels[0].textContent = t("statTotal");
       refs.statLabels[1].textContent = t("statActive");
       refs.statLabels[2].textContent = t("statPublished");
+      refs.statLabels[3].textContent = t("statViews");
       refs.projectsTitle.textContent = t("projectsTitle");
       refs.searchLabel.textContent = t("searchLabel");
       refs.search.placeholder = t("searchPlaceholder");
@@ -2687,6 +2909,7 @@
       refs.statTotal.textContent = String(appData.projects.length);
       refs.statActive.textContent = String(appData.projects.filter(project => project.status === "in-progress").length);
       refs.statPublished.textContent = String(appData.projects.filter(project => project.status === "published").length);
+      refs.statViews.textContent = String(profileViewCount);
     }
 
     function renderProjects() {
@@ -2725,6 +2948,8 @@
         const titleId = `title-${project.id}`;
         const hasSource = Boolean(project.sourceUrl);
         const hasProgress = typeof project.progress === "number" && project.progress > 0 && project.progress < 100;
+        const feedback = getFeedbackStats(project.id);
+        const currentVote = Number(projectFeedbackVotes[project.id] || 0);
 
         item.innerHTML = `
           <article class="project-card surface surface--card" aria-labelledby="${titleId}">
@@ -2761,6 +2986,14 @@
             </div>
 
             <div class="project-card__aside">
+              <div class="project-feedback" role="group" aria-label="${escapeHTML(localizedProject.title)} ${escapeHTML(t("likesShort"))}">
+                <button class="feedback-button ${currentVote === 1 ? "is-active" : ""}" type="button" data-feedback-project="${escapeHTML(project.id)}" data-feedback-vote="1" aria-label="${escapeHTML(t("likeProject"))}: ${escapeHTML(localizedProject.title)}">
+                  ${thumbIcon("up")}<span class="feedback-count">${feedback.likes}</span>
+                </button>
+                <button class="feedback-button ${currentVote === -1 ? "is-active" : ""}" type="button" data-feedback-project="${escapeHTML(project.id)}" data-feedback-vote="-1" aria-label="${escapeHTML(t("dislikeProject"))}: ${escapeHTML(localizedProject.title)}">
+                  ${thumbIcon("down")}
+                </button>
+              </div>
               ${hasSource ? `<a class="source-link" href="${escapeHTML(project.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHTML(t("openSourceFor"))} ${escapeHTML(localizedProject.title)}">${escapeHTML(t("source"))}<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7" /><path d="M9 7h8v8" /></svg></a>` : `<span class="source-link" aria-disabled="true">${escapeHTML(t("sourceSoon"))}</span>`}
             </div>
           </article>
@@ -2864,7 +3097,7 @@
       const title = refs.ideaTitle.value.trim();
       const summary = refs.ideaSummary.value.trim();
       const contactValue = refs.ideaContactValue.value.trim();
-      if (title.length < 3 || summary.length < 20 || contactValue.length < 2) {
+      if (title.length < 3 || summary.length < 10 || contactValue.length < 2) {
         setIdeaMessage(t("ideaValidation"), "danger");
         return;
       }
@@ -2997,11 +3230,17 @@
       refs.adminProjectList.innerHTML = "";
       const fragment = document.createDocumentFragment();
       appData.projects.forEach(project => {
+        const feedback = getFeedbackStats(project.id);
+        const statusLabel = getStatusMeta(project.status).label;
         const item = document.createElement("li");
         item.innerHTML = `
           <button class="admin-project-button ${project.id === selectedProjectId ? "is-selected" : ""}" type="button" data-project-id="${escapeHTML(project.id)}">
             <span class="admin-project-thumb">${project.image ? `<img src="${escapeHTML(project.image)}" alt="" />` : escapeHTML(project.glyph)}</span>
-            <span class="admin-project-name"><strong>${escapeHTML(project.title)}</strong><span>${escapeHTML(statusMeta[project.status]?.label || project.status)}</span></span>
+            <span class="admin-project-name">
+              <strong>${escapeHTML(project.title)}</strong>
+              <span>${escapeHTML(statusLabel || project.status)}</span>
+              <span>${escapeHTML(t("likesShort"))}: ${feedback.likes} · ${escapeHTML(t("dislikesShort"))}: ${feedback.dislikes}</span>
+            </span>
           </button>
         `;
         item.querySelector("button").addEventListener("click", () => {
@@ -3155,6 +3394,12 @@
     refs.search.addEventListener("input", event => {
       state.query = event.target.value;
       renderProjects();
+    });
+
+    refs.projectList.addEventListener("click", event => {
+      const button = event.target.closest("[data-feedback-project]");
+      if (!button) return;
+      submitProjectFeedback(button.dataset.feedbackProject, Number(button.dataset.feedbackVote));
     });
 
     refs.ideaForm.addEventListener("submit", submitIdea);
