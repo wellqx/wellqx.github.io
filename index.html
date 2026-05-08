@@ -480,6 +480,29 @@
       text-wrap: pretty;
     }
 
+    .profile-views {
+      width: fit-content;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: var(--space-4);
+      border-radius: var(--radius-control);
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.045);
+      color: var(--text-2);
+      padding: 0 12px;
+      font-size: var(--fs-footnote);
+      line-height: var(--lh-footnote);
+      font-weight: 620;
+    }
+
+    .profile-views strong {
+      color: var(--text);
+      font-weight: 760;
+      font-variant-numeric: tabular-nums;
+    }
+
     .hero__meta {
       min-width: 360px;
       display: grid;
@@ -930,6 +953,10 @@
       line-height: var(--lh-caption);
       font-weight: 740;
       font-variant-numeric: tabular-nums;
+    }
+
+    .feedback-count--private {
+      color: rgba(255, 184, 184, 0.95);
     }
 
     .feedback-icon--down {
@@ -1674,6 +1701,11 @@
           <p class="hero__kicker" id="heroKicker">wellqx · vibe coder</p>
           <h2 class="hero__title" id="heroTitle">Короткое портфолио моих проектов.</h2>
           <p class="hero__text" id="heroText">Я вайбкодер, делаю osu!-утилиты, моды, локальные ассистенты и небольшие AI-автоматизации.</p>
+          <p class="profile-views">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" /><circle cx="12" cy="12" r="3" /></svg>
+            <span data-copy="profileViewsLabel">Просмотров профиля</span>
+            <strong id="profileViews">0</strong>
+          </p>
         </div>
 
         <dl class="hero__meta" aria-label="Статистика проектов">
@@ -1918,7 +1950,7 @@
           title: "WellNet",
           description: "Лёгкий клиентский мод для Minecraft, который помогает сохранить плавность игры в тяжёлых модпаках. Следит за состоянием сессии и может автоматически менять настройки, например дальность прорисовки, чтобы избежать резких просадок FPS и статтеров.",
           glyph: "WN",
-          image: "",
+          image: "https://cdegwbbmoqtcjirysfwa.supabase.co/storage/v1/object/public/project-assets/projects/wellnet/1778110803117-75e5eda5-6840-492d-9b3b-abee335dbc4b.png",
           status: "published",
           progress: 100,
           release: "опубликован · дата в GitHub",
@@ -1930,9 +1962,9 @@
           title: "osureplay",
           description: "Конвертер osu! replay в готовое MP4-видео. Цель проекта — превратить реплей в нормальный видеоролик без ручной записи экрана и лишних действий.",
           glyph: "OR",
-          image: "",
+          image: "https://cdegwbbmoqtcjirysfwa.supabase.co/storage/v1/object/public/project-assets/projects/osureplay/1778111793406-50bb157d-cac6-443b-92b7-19a6fb49996e.jpg",
           status: "in-progress",
-          progress: null,
+          progress: 50,
           release: "релиз · июль 2026",
           sourceUrl: "https://github.com/wellqx/osureplay",
           tags: ["osu!", "replay", "mp4"]
@@ -1942,9 +1974,9 @@
           title: "osu!assistant",
           description: "Локальный observe-only ассистент для osu!mania. Работает без overlay, live-assist, облака и вмешательства в игру: собирает события, хранит их в SQLite и после карты готовит воспроизводимый анализ.",
           glyph: "OA",
-          image: "",
+          image: "https://cdegwbbmoqtcjirysfwa.supabase.co/storage/v1/object/public/project-assets/projects/osu-assistant/1778111666245-71685dc5-d769-4d09-9b9c-30f47764fcee.jpg",
           status: "in-progress",
-          progress: null,
+          progress: 20,
           release: "релиз · 2027",
           sourceUrl: "https://github.com/wellqx/mania_coach",
           tags: ["osu!mania", "python", "local-only"]
@@ -2007,6 +2039,7 @@
         statActive: "В разработке",
         statPublished: "Релизы",
         statViews: "Просмотры",
+        profileViewsLabel: "Просмотров профиля",
         projectsTitle: "Основные проекты",
         projectsShownAll: "Показаны все проекты",
         found: "найдено",
@@ -2082,6 +2115,7 @@
         statActive: "In progress",
         statPublished: "Releases",
         statViews: "Views",
+        profileViewsLabel: "Profile views",
         projectsTitle: "Main projects",
         projectsShownAll: "Showing all projects",
         found: "found",
@@ -2166,9 +2200,52 @@
       }
     };
 
+    const mojibakePatterns = [
+      [0x0420, 0x0459], [0x0420, 0x045f], [0x0420, 0x203a], [0x0420, 0x0407],
+      [0x0420, 0x0451], [0x0420, 0x00b5], [0x0420, 0x0405], [0x0420, 0x0455],
+      [0x0420, 0x00b0], [0x0421, 0x0403], [0x0421, 0x2039], [0x0421, 0x040a],
+      [0x0421, 0x0402], [0x0421, 0x201a], [0x0432, 0x0402], [0x0412, 0x00b7]
+    ].map(pair => String.fromCodePoint(...pair));
+
+    let windows1251ReverseMap = null;
+
+    function getWindows1251ReverseMap() {
+      if (windows1251ReverseMap) return windows1251ReverseMap;
+      windows1251ReverseMap = new Map();
+      const decoder = new TextDecoder("windows-1251");
+      for (let byte = 0; byte <= 255; byte += 1) {
+        windows1251ReverseMap.set(decoder.decode(new Uint8Array([byte])), byte);
+      }
+      return windows1251ReverseMap;
+    }
+
+    function repairMojibakeText(value) {
+      const text = String(value || "");
+      if (!mojibakePatterns.some(pattern => text.includes(pattern))) return text;
+
+      try {
+        const reverseMap = getWindows1251ReverseMap();
+        const bytes = [];
+        for (const char of text) {
+          if (reverseMap.has(char)) {
+            bytes.push(reverseMap.get(char));
+          } else if (char.codePointAt(0) <= 0x7f) {
+            bytes.push(char.codePointAt(0));
+          } else {
+            return text;
+          }
+        }
+        const repaired = new TextDecoder("utf-8").decode(new Uint8Array(bytes));
+        return repaired.includes("\uFFFD") ? text : repaired;
+      } catch {
+        return text;
+      }
+    }
+
     let appData = loadData();
     let selectedProjectId = appData.projects[0]?.id || null;
     let currentSession = null;
+    let canViewPrivateFeedback = false;
     let isSaving = false;
     let currentLanguage = loadLanguage();
     let currentIdea = null;
@@ -2221,6 +2298,7 @@
       statActive: document.getElementById("statActive"),
       statPublished: document.getElementById("statPublished"),
       statViews: document.getElementById("statViews"),
+      profileViews: document.getElementById("profileViews"),
       footer: document.querySelector(".footer"),
       adminBackdrop: document.getElementById("adminBackdrop"),
       openAdmin: document.getElementById("openAdmin"),
@@ -2432,6 +2510,51 @@
       return projectFeedbackStats[projectId] || { likes: 0, dislikes: 0 };
     }
 
+    function canSeePrivateFeedback() {
+      return Boolean(currentSession && canViewPrivateFeedback);
+    }
+
+    function setProjectFeedbackState(projectId, nextVote, nextStats) {
+      projectFeedbackStats = {
+        ...projectFeedbackStats,
+        [projectId]: {
+          likes: Math.max(0, Number(nextStats.likes || 0)),
+          dislikes: Math.max(0, Number(nextStats.dislikes || 0))
+        }
+      };
+
+      if (nextVote === 1 || nextVote === -1) {
+        projectFeedbackVotes[projectId] = nextVote;
+      } else {
+        delete projectFeedbackVotes[projectId];
+      }
+      saveProjectFeedbackVotes();
+    }
+
+    function getOptimisticFeedback(projectId, vote) {
+      const currentStats = getFeedbackStats(projectId);
+      const previousVote = Number(projectFeedbackVotes[projectId] || 0);
+      const nextVote = previousVote === vote ? 0 : vote;
+      return {
+        nextVote,
+        nextStats: {
+          likes: currentStats.likes + (nextVote === 1 ? 1 : 0) - (previousVote === 1 ? 1 : 0),
+          dislikes: currentStats.dislikes + (nextVote === -1 ? 1 : 0) - (previousVote === -1 ? 1 : 0)
+        },
+        previousVote,
+        previousStats: currentStats
+      };
+    }
+
+    function clearPrivateFeedbackStats() {
+      Object.keys(projectFeedbackStats).forEach(projectId => {
+        projectFeedbackStats[projectId] = {
+          likes: Number(projectFeedbackStats[projectId]?.likes || 0),
+          dislikes: 0
+        };
+      });
+    }
+
     function normalizeFeedbackRows(rows, includeDislikes = false) {
       const nextStats = { ...projectFeedbackStats };
       (rows || []).forEach(row => {
@@ -2466,19 +2589,37 @@
 
     function normalizeData(data) {
       const normalized = structuredClone(defaultData);
-      normalized.profile = { ...normalized.profile, ...(data.profile || {}) };
-      normalized.projects = Array.isArray(data.projects) && data.projects.length ? data.projects.map(project => ({
-        id: String(project.id || crypto.randomUUID()),
-        title: String(project.title || "Новый проект"),
-        description: String(project.description || ""),
-        glyph: String(project.glyph || "PR").slice(0, 4),
-        image: String(project.image || ""),
-        status: statusMeta[project.status] ? project.status : "pending",
-        progress: typeof project.progress === "number" ? clamp(project.progress, 0, 100) : null,
-        release: String(project.release || ""),
-        sourceUrl: String(project.sourceUrl || ""),
-        tags: Array.isArray(project.tags) ? project.tags.map(String) : []
-      })) : normalized.projects;
+      const profileInput = data.profile || {};
+      normalized.profile = {
+        avatar: String(profileInput.avatar || normalized.profile.avatar || ""),
+        topbarEyebrow: repairMojibakeText(profileInput.topbarEyebrow || normalized.profile.topbarEyebrow),
+        topbarTitle: repairMojibakeText(profileInput.topbarTitle || normalized.profile.topbarTitle),
+        heroKicker: repairMojibakeText(profileInput.heroKicker || normalized.profile.heroKicker),
+        heroTitle: repairMojibakeText(profileInput.heroTitle || normalized.profile.heroTitle),
+        heroText: repairMojibakeText(profileInput.heroText || normalized.profile.heroText),
+        githubUrl: String(profileInput.githubUrl || normalized.profile.githubUrl || ""),
+        gunsUrl: String(profileInput.gunsUrl || normalized.profile.gunsUrl || "")
+      };
+      normalized.projects = Array.isArray(data.projects) && data.projects.length ? data.projects.map(project => {
+        const id = String(project.id || crypto.randomUUID());
+        const fallbackProject = defaultData.projects.find(defaultProject => defaultProject.id === id);
+        return {
+          id,
+          title: repairMojibakeText(project.title || fallbackProject?.title || "Новый проект"),
+          description: repairMojibakeText(project.description || fallbackProject?.description || ""),
+          glyph: repairMojibakeText(project.glyph || fallbackProject?.glyph || "PR").slice(0, 4),
+          image: String(project.image || fallbackProject?.image || ""),
+          status: statusMeta[project.status] ? project.status : fallbackProject?.status || "pending",
+          progress: typeof project.progress === "number"
+            ? clamp(project.progress, 0, 100)
+            : typeof fallbackProject?.progress === "number"
+              ? fallbackProject.progress
+              : null,
+          release: repairMojibakeText(project.release || fallbackProject?.release || ""),
+          sourceUrl: String(project.sourceUrl || fallbackProject?.sourceUrl || ""),
+          tags: Array.isArray(project.tags) ? project.tags.map(repairMojibakeText) : fallbackProject?.tags || []
+        };
+      }) : normalized.projects;
       return normalized;
     }
 
@@ -2499,6 +2640,9 @@
 
     function setAdminAccess(session) {
       const isLoggedIn = Boolean(session);
+      if (!isLoggedIn) {
+        canViewPrivateFeedback = false;
+      }
       refs.adminLogin.hidden = isLoggedIn;
       refs.adminEditor.hidden = !isLoggedIn;
       refs.saveAdmin.hidden = !isLoggedIn;
@@ -2523,11 +2667,11 @@
       if (!row) return structuredClone(defaultData.profile);
       return {
         avatar: row.avatar_url || "",
-        topbarEyebrow: row.topbar_eyebrow || "",
-        topbarTitle: row.topbar_title || "",
-        heroKicker: row.hero_kicker || "",
-        heroTitle: row.hero_title || "",
-        heroText: row.hero_text || "",
+        topbarEyebrow: repairMojibakeText(row.topbar_eyebrow),
+        topbarTitle: repairMojibakeText(row.topbar_title),
+        heroKicker: repairMojibakeText(row.hero_kicker),
+        heroTitle: repairMojibakeText(row.hero_title),
+        heroText: repairMojibakeText(row.hero_text),
         githubUrl: row.github_url || "",
         gunsUrl: row.guns_url || ""
       };
@@ -2536,15 +2680,15 @@
     function projectFromRow(row) {
       return {
         id: row.id,
-        title: row.title,
-        description: row.description || "",
-        glyph: row.glyph || "PR",
+        title: repairMojibakeText(row.title),
+        description: repairMojibakeText(row.description),
+        glyph: repairMojibakeText(row.glyph || "PR"),
         image: row.image_url || "",
         status: row.status || "pending",
         progress: typeof row.progress === "number" ? row.progress : null,
-        release: row.release || "",
+        release: repairMojibakeText(row.release),
         sourceUrl: row.source_url || "",
-        tags: Array.isArray(row.tags) ? row.tags : []
+        tags: Array.isArray(row.tags) ? row.tags.map(repairMojibakeText) : []
       };
     }
 
@@ -2664,8 +2808,18 @@
 
       const rpcName = admin && currentSession ? "get_project_feedback_admin" : "get_project_like_counts";
       const { data, error } = await supabaseClient.rpc(rpcName);
-      if (error) return;
+      if (error) {
+        if (admin) {
+          canViewPrivateFeedback = false;
+          clearPrivateFeedbackStats();
+          renderProjects();
+        }
+        return;
+      }
 
+      if (admin && currentSession) {
+        canViewPrivateFeedback = true;
+      }
       normalizeFeedbackRows(data, admin && currentSession);
       renderProjects();
       if (admin && currentSession) renderAdminProjectList();
@@ -2674,22 +2828,27 @@
     async function submitProjectFeedback(projectId, vote) {
       if (!supabaseClient || !projectId || ![1, -1].includes(vote)) return;
 
+      const optimistic = getOptimisticFeedback(projectId, vote);
+      setProjectFeedbackState(projectId, optimistic.nextVote, optimistic.nextStats);
+      renderProjects();
+
       const { data, error } = await supabaseClient.rpc("submit_project_feedback", {
         p_voter_token: getFeedbackToken(),
         p_project_id: projectId,
         p_vote: vote
       });
-      if (error) return;
+      if (error) {
+        setProjectFeedbackState(projectId, optimistic.previousVote, optimistic.previousStats);
+        renderProjects();
+        return;
+      }
 
       const row = Array.isArray(data) ? data[0] : data;
-      normalizeFeedbackRows(row ? [row] : []);
-
-      if (row?.current_vote === 1 || row?.current_vote === -1) {
-        projectFeedbackVotes[projectId] = row.current_vote;
-      } else {
-        delete projectFeedbackVotes[projectId];
-      }
-      saveProjectFeedbackVotes();
+      const currentStats = getFeedbackStats(projectId);
+      setProjectFeedbackState(projectId, Number(row?.current_vote || 0), {
+        likes: Number(row?.likes ?? currentStats.likes),
+        dislikes: currentStats.dislikes
+      });
       renderProjects();
     }
 
@@ -2910,6 +3069,7 @@
       refs.statActive.textContent = String(appData.projects.filter(project => project.status === "in-progress").length);
       refs.statPublished.textContent = String(appData.projects.filter(project => project.status === "published").length);
       refs.statViews.textContent = String(profileViewCount);
+      refs.profileViews.textContent = String(profileViewCount);
     }
 
     function renderProjects() {
@@ -2950,6 +3110,7 @@
         const hasProgress = typeof project.progress === "number" && project.progress > 0 && project.progress < 100;
         const feedback = getFeedbackStats(project.id);
         const currentVote = Number(projectFeedbackVotes[project.id] || 0);
+        const showPrivateFeedback = canSeePrivateFeedback();
 
         item.innerHTML = `
           <article class="project-card surface surface--card" aria-labelledby="${titleId}">
@@ -2991,7 +3152,7 @@
                   ${thumbIcon("up")}<span class="feedback-count">${feedback.likes}</span>
                 </button>
                 <button class="feedback-button ${currentVote === -1 ? "is-active" : ""}" type="button" data-feedback-project="${escapeHTML(project.id)}" data-feedback-vote="-1" aria-label="${escapeHTML(t("dislikeProject"))}: ${escapeHTML(localizedProject.title)}">
-                  ${thumbIcon("down")}
+                  ${thumbIcon("down")}${showPrivateFeedback ? `<span class="feedback-count feedback-count--private">${feedback.dislikes}</span>` : ""}
                 </button>
               </div>
               ${hasSource ? `<a class="source-link" href="${escapeHTML(project.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHTML(t("openSourceFor"))} ${escapeHTML(localizedProject.title)}">${escapeHTML(t("source"))}<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7" /><path d="M9 7h8v8" /></svg></a>` : `<span class="source-link" aria-disabled="true">${escapeHTML(t("sourceSoon"))}</span>`}
@@ -3439,12 +3600,15 @@
     });
 
     refs.signOutAdmin.addEventListener("click", async () => {
-      if (supabaseClient) await supabaseClient.auth.signOut();
-      currentSession = null;
-      adminIdeas = [];
-      renderAdminIdeas();
-      setAdminAccess(null);
-    });
+          if (supabaseClient) await supabaseClient.auth.signOut();
+          currentSession = null;
+          adminIdeas = [];
+          canViewPrivateFeedback = false;
+          clearPrivateFeedbackStats();
+          renderAdminIdeas();
+          renderProjects();
+          setAdminAccess(null);
+        });
 
     refs.adminIdeasList.addEventListener("change", event => {
       const select = event.target.closest("[data-idea-status]");
