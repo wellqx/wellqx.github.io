@@ -388,7 +388,7 @@
       width: min(100%, 720px);
       min-height: 52px;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: var(--space-1);
       padding: var(--space-1);
       border-radius: var(--radius-control);
@@ -910,6 +910,129 @@
       line-height: var(--lh-subhead);
     }
 
+    .ideas-panel {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .ideas-panel[hidden] {
+      display: none !important;
+    }
+
+    .ideas-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: var(--space-4);
+      align-items: start;
+    }
+
+    .idea-form,
+    .idea-status-card {
+      border-radius: var(--radius-card);
+      border: 1px solid var(--line-soft);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.060), rgba(255, 255, 255, 0.035)),
+        rgba(255, 255, 255, 0.030);
+      padding: var(--space-5);
+    }
+
+    .idea-form__header,
+    .idea-status-card__header {
+      display: grid;
+      gap: 6px;
+      margin-bottom: var(--space-4);
+    }
+
+    .idea-form__title,
+    .idea-status-card__title {
+      margin: 0;
+      color: var(--text);
+      font-size: var(--fs-title-3);
+      line-height: var(--lh-title-3);
+      font-weight: 740;
+      letter-spacing: -0.024em;
+    }
+
+    .idea-form__text,
+    .idea-status-card__text {
+      margin: 0;
+      color: var(--text-3);
+      font-size: var(--fs-footnote);
+      line-height: var(--lh-footnote);
+    }
+
+    .idea-honeypot {
+      position: absolute;
+      left: -100vw;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .idea-message {
+      min-height: 20px;
+      margin: 0;
+      color: var(--text-3);
+      font-size: var(--fs-footnote);
+      line-height: var(--lh-footnote);
+    }
+
+    .idea-message[data-tone="ready"] { color: rgba(182, 255, 210, 0.92); }
+    .idea-message[data-tone="danger"] { color: rgba(255, 184, 184, 0.95); }
+
+    .idea-status-pill {
+      width: fit-content;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--text-2);
+      padding: 0 10px;
+      font-size: var(--fs-caption-1);
+      line-height: var(--lh-caption);
+      font-weight: 700;
+    }
+
+    .idea-status-pill[data-status="pending"] {
+      color: rgba(255, 230, 160, 0.95);
+      border-color: rgba(255, 214, 102, 0.28);
+      background: rgba(255, 193, 7, 0.10);
+    }
+
+    .idea-status-pill[data-status="reviewing"] {
+      color: rgba(112, 196, 255, 0.96);
+      border-color: rgba(10, 132, 255, 0.32);
+      background: rgba(10, 132, 255, 0.12);
+    }
+
+    .idea-status-pill[data-status="accepted"] {
+      color: rgba(96, 222, 128, 0.98);
+      border-color: rgba(48, 209, 88, 0.34);
+      background: rgba(48, 209, 88, 0.12);
+    }
+
+    .idea-status-pill[data-status="declined"] {
+      color: rgba(255, 184, 184, 0.95);
+      border-color: rgba(255, 126, 126, 0.28);
+      background: rgba(255, 80, 80, 0.10);
+    }
+
+    .idea-status-card__body {
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .idea-status-card__meta {
+      display: grid;
+      gap: 4px;
+      color: var(--text-3);
+      font-size: var(--fs-footnote);
+      line-height: var(--lh-footnote);
+    }
+
     .footer {
       padding: var(--space-8) 0 0;
       color: var(--text-4);
@@ -1216,6 +1339,47 @@
       line-height: var(--lh-caption);
     }
 
+    .admin-idea-item {
+      display: grid;
+      gap: var(--space-3);
+      border-radius: 18px;
+      border: 1px solid var(--line-soft);
+      background: rgba(255, 255, 255, 0.035);
+      padding: var(--space-3);
+    }
+
+    .admin-idea-item__top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+
+    .admin-idea-item__title {
+      margin: 0;
+      color: var(--text);
+      font-size: var(--fs-footnote);
+      line-height: var(--lh-footnote);
+      font-weight: 740;
+    }
+
+    .admin-idea-item__text,
+    .admin-idea-item__meta {
+      margin: 0;
+      color: var(--text-3);
+      font-size: var(--fs-caption-1);
+      line-height: var(--lh-caption);
+    }
+
+    .admin-idea-item select {
+      min-height: 38px;
+      border-radius: 14px;
+      border: 1px solid var(--line-soft);
+      background: rgba(0, 0, 0, 0.22);
+      color: var(--text);
+      padding: 0 10px;
+    }
+
     .admin-actions-row {
       display: flex;
       flex-wrap: wrap;
@@ -1325,6 +1489,7 @@
       .hero__meta { width: 100%; min-width: 0; }
       .content-toolbar { grid-template-columns: 1fr; }
       .search { width: 100%; }
+      .ideas-shell { grid-template-columns: 1fr; }
       .project-card { grid-template-columns: 120px minmax(0, 1fr); }
       .project-media { width: 120px; border-radius: 20px; }
       .project-card__aside { grid-column: 2; align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
@@ -1481,6 +1646,64 @@
             <p class="empty-state__text">Измени фильтр статуса или поисковый запрос.</p>
           </div>
         </div>
+
+        <section class="ideas-panel" id="ideasPanel" hidden aria-labelledby="ideasTitle">
+          <div class="ideas-shell">
+            <form class="idea-form surface surface--card" id="ideaForm">
+              <div class="idea-form__header">
+                <h3 class="idea-form__title" id="ideasTitle" data-copy="ideasTitle">Предложить идею</h3>
+                <p class="idea-form__text" data-copy="ideasText">Опиши коротко, что хочешь увидеть. После отправки ты сможешь поправить эту же идею и следить за статусом.</p>
+              </div>
+
+              <div class="field">
+                <label for="ideaTitle" data-copy="ideaTitleLabel">Название</label>
+                <input id="ideaTitle" type="text" maxlength="90" data-placeholder="ideaTitlePlaceholder" autocomplete="off" required />
+              </div>
+
+              <div class="field">
+                <label for="ideaSummary" data-copy="ideaSummaryLabel">Суть идеи</label>
+                <textarea id="ideaSummary" maxlength="900" data-placeholder="ideaSummaryPlaceholder" required></textarea>
+              </div>
+
+              <div class="field">
+                <label for="ideaContribution" data-copy="ideaContributionLabel">Чем можешь помочь</label>
+                <textarea id="ideaContribution" maxlength="600" data-placeholder="ideaContributionPlaceholder"></textarea>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="ideaContactMethod" data-copy="ideaContactMethodLabel">Где связаться</label>
+                  <select id="ideaContactMethod" required>
+                    <option value="discord">Discord</option>
+                    <option value="telegram">Telegram</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="ideaContactValue" data-copy="ideaContactValueLabel">Контакт</label>
+                  <input id="ideaContactValue" type="text" maxlength="90" data-placeholder="ideaContactValuePlaceholder" autocomplete="off" required />
+                </div>
+              </div>
+
+              <div class="idea-honeypot" aria-hidden="true">
+                <label for="ideaWebsite">Website</label>
+                <input id="ideaWebsite" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <div class="admin-actions-row">
+                <button class="admin-control admin-control--primary" id="submitIdea" type="submit" data-copy="ideaSubmitButton">Отправить идею</button>
+              </div>
+              <p class="idea-message" id="ideaMessage" data-tone="warning" aria-live="polite"></p>
+            </form>
+
+            <aside class="idea-status-card surface surface--card" id="ideaStatusCard" hidden>
+              <div class="idea-status-card__header">
+                <h3 class="idea-status-card__title" data-copy="ideaStatusTitle">Твоя идея</h3>
+                <p class="idea-status-card__text" data-copy="ideaStatusText">Здесь будет статус идеи, отправленной из этого браузера.</p>
+              </div>
+              <div class="idea-status-card__body" id="ideaStatusBody"></div>
+            </aside>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -1542,6 +1765,11 @@
                 <button class="admin-control admin-control--danger" id="deleteProject" type="button">Удалить</button>
               </div>
             </section>
+
+            <section class="admin-section">
+              <h3 class="admin-section__title" data-copy="ideaAdminTitle">Идеи</h3>
+              <ul class="admin-list" id="adminIdeasList"></ul>
+            </section>
           </div>
 
           <div>
@@ -1597,6 +1825,9 @@
   <script>
     const STORAGE_KEY = "wellqx.project-tracker.v2";
     const LANGUAGE_KEY = "wellqx.project-tracker.language";
+    const IDEA_TOKEN_KEY = "wellqx.project-tracker.idea-token";
+    const IDEA_COOLDOWN_KEY = "wellqx.project-tracker.idea-cooldown-until";
+    const IDEA_LOCAL_COOLDOWN_MS = 60 * 1000;
     const SUPABASE_URL = "https://cdegwbbmoqtcjirysfwa.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_7jGZQCBowIypfhKp1mk9XA_v3rDLvFc";
     const SUPABASE_BUCKET = "project-assets";
@@ -1672,7 +1903,8 @@
       { id: "all" },
       { id: "pending" },
       { id: "in-progress" },
-      { id: "published" }
+      { id: "published" },
+      { id: "ideas" }
     ];
 
     const statusMeta = {
@@ -1686,6 +1918,8 @@
       "in-progress": { label: "In progress", progressLabel: "Progress" },
       published: { label: "Published", progressLabel: "Done" }
     };
+
+    const ideaStatuses = ["pending", "reviewing", "accepted", "declined"];
 
     const i18n = {
       ru: {
@@ -1703,6 +1937,7 @@
         "filter.pending": "В планах",
         "filter.in-progress": "В разработке",
         "filter.published": "Опубликован",
+        "filter.ideas": "Идеи",
         statTotal: "Всего",
         statActive: "В разработке",
         statPublished: "Релизы",
@@ -1721,7 +1956,41 @@
         projectTags: "Теги проекта",
         openSourceFor: "Открыть исходный код проекта",
         source: "Source",
-        sourceSoon: "Source позже"
+        sourceSoon: "Source позже",
+        ideasSummary: "Форма и статус твоей идеи",
+        ideasTitle: "Предложить идею",
+        ideasText: "Опиши коротко, что хочешь увидеть. После отправки ты сможешь поправить эту же идею и следить за статусом.",
+        ideaTitleLabel: "Название",
+        ideaTitlePlaceholder: "Например: osu! replay bot",
+        ideaSummaryLabel: "Суть идеи",
+        ideaSummaryPlaceholder: "Что должно работать, для кого это полезно и какой результат ты ожидаешь.",
+        ideaContributionLabel: "Чем можешь помочь",
+        ideaContributionPlaceholder: "Необязательно: тесты, дизайн, код, примеры, идеи, ничего.",
+        ideaContactMethodLabel: "Где связаться",
+        ideaContactValueLabel: "Контакт",
+        ideaContactValuePlaceholder: "Твой ник или @username",
+        ideaSubmitButton: "Отправить идею",
+        ideaUpdateButton: "Обновить идею",
+        ideaStatusTitle: "Твоя идея",
+        ideaStatusText: "Здесь будет статус идеи, отправленной из этого браузера.",
+        ideaNoSupabase: "Идеи пока недоступны. Попробуй позже.",
+        ideaLoaded: "Твоя идея загружена. Можно поправить и отправить обновление.",
+        ideaSaved: "Идея отправлена. Статус появится здесь.",
+        ideaValidation: "Заполни название, понятное описание и контакт.",
+        ideaCooldown: "Подожди минуту перед повторной отправкой.",
+        ideaClosed: "Эта идея уже закрыта, правки отключены.",
+        ideaStatusPending: "в ожидании",
+        ideaStatusReviewing: "на рассмотрении",
+        ideaStatusAccepted: "принято",
+        ideaStatusDeclined: "отказано",
+        ideaStatusUpdated: "Обновлено",
+        ideaContact: "Связь",
+        ideaAdminTitle: "Идеи",
+        ideaAdminEmpty: "Пока идей нет.",
+        ideaDelete: "Удалить",
+        ideaDeleteConfirm: "Удалить эту идею?",
+        ideaDeleted: "Идея удалена.",
+        ideaStatusSaved: "Статус идеи обновлен."
       },
       en: {
         pageTitle: "wellqx — Project Tracker",
@@ -1738,6 +2007,7 @@
         "filter.pending": "Planned",
         "filter.in-progress": "In progress",
         "filter.published": "Published",
+        "filter.ideas": "Ideas",
         statTotal: "Total",
         statActive: "In progress",
         statPublished: "Releases",
@@ -1756,7 +2026,41 @@
         projectTags: "Project tags",
         openSourceFor: "Open source code for",
         source: "Source",
-        sourceSoon: "Source later"
+        sourceSoon: "Source later",
+        ideasSummary: "Form and status for your idea",
+        ideasTitle: "Suggest an idea",
+        ideasText: "Briefly describe what you want to see. After sending, you can edit the same idea and track its status.",
+        ideaTitleLabel: "Title",
+        ideaTitlePlaceholder: "Example: osu! replay bot",
+        ideaSummaryLabel: "Idea summary",
+        ideaSummaryPlaceholder: "What should it do, who is it useful for, and what result do you expect?",
+        ideaContributionLabel: "How you can help",
+        ideaContributionPlaceholder: "Optional: testing, design, code, examples, ideas, nothing.",
+        ideaContactMethodLabel: "Contact channel",
+        ideaContactValueLabel: "Contact",
+        ideaContactValuePlaceholder: "Your nickname or @username",
+        ideaSubmitButton: "Send idea",
+        ideaUpdateButton: "Update idea",
+        ideaStatusTitle: "Your idea",
+        ideaStatusText: "This shows the status of the idea sent from this browser.",
+        ideaNoSupabase: "Ideas are unavailable. Try again later.",
+        ideaLoaded: "Your idea is loaded. You can edit it and send an update.",
+        ideaSaved: "Idea sent. Its status will appear here.",
+        ideaValidation: "Fill in a title, clear description, and contact.",
+        ideaCooldown: "Wait a minute before sending again.",
+        ideaClosed: "This idea is already closed, so edits are disabled.",
+        ideaStatusPending: "pending",
+        ideaStatusReviewing: "under review",
+        ideaStatusAccepted: "accepted",
+        ideaStatusDeclined: "declined",
+        ideaStatusUpdated: "Updated",
+        ideaContact: "Contact",
+        ideaAdminTitle: "Ideas",
+        ideaAdminEmpty: "No ideas yet.",
+        ideaDelete: "Delete",
+        ideaDeleteConfirm: "Delete this idea?",
+        ideaDeleted: "Idea deleted.",
+        ideaStatusSaved: "Idea status updated."
       }
     };
 
@@ -1792,6 +2096,9 @@
     let currentSession = null;
     let isSaving = false;
     let currentLanguage = loadLanguage();
+    let currentIdea = null;
+    let adminIdeas = [];
+    let ideaFormStartedAt = Date.now();
 
     const state = { filter: "all", query: "" };
 
@@ -1815,6 +2122,18 @@
       emptyState: document.getElementById("emptyState"),
       emptyTitle: document.querySelector(".empty-state__title"),
       emptyText: document.querySelector(".empty-state__text"),
+      ideasPanel: document.getElementById("ideasPanel"),
+      ideaForm: document.getElementById("ideaForm"),
+      ideaTitle: document.getElementById("ideaTitle"),
+      ideaSummary: document.getElementById("ideaSummary"),
+      ideaContribution: document.getElementById("ideaContribution"),
+      ideaContactMethod: document.getElementById("ideaContactMethod"),
+      ideaContactValue: document.getElementById("ideaContactValue"),
+      ideaWebsite: document.getElementById("ideaWebsite"),
+      submitIdea: document.getElementById("submitIdea"),
+      ideaMessage: document.getElementById("ideaMessage"),
+      ideaStatusCard: document.getElementById("ideaStatusCard"),
+      ideaStatusBody: document.getElementById("ideaStatusBody"),
       search: document.getElementById("projectSearch"),
       searchLabel: document.querySelector(".search .sr-only"),
       projectsTitle: document.getElementById("projectsTitle"),
@@ -1829,6 +2148,7 @@
       closeAdmin: document.getElementById("closeAdmin"),
       saveAdmin: document.getElementById("saveAdmin"),
       adminProjectList: document.getElementById("adminProjectList"),
+      adminIdeasList: document.getElementById("adminIdeasList"),
       avatarPreview: document.getElementById("avatarPreview"),
       avatarInput: document.getElementById("avatarInput"),
       projectImagePreview: document.getElementById("projectImagePreview"),
@@ -1927,6 +2247,92 @@
         : project;
     }
 
+    function getIdeaToken() {
+      try {
+        let token = getStoredIdeaToken();
+        if (!token) {
+          token = `${crypto.randomUUID()}-${crypto.randomUUID()}`;
+          localStorage.setItem(IDEA_TOKEN_KEY, token);
+        }
+        return token;
+      } catch {
+        return `${crypto.randomUUID()}-${crypto.randomUUID()}`;
+      }
+    }
+
+    function getStoredIdeaToken() {
+      try {
+        return localStorage.getItem(IDEA_TOKEN_KEY) || "";
+      } catch {
+        return "";
+      }
+    }
+
+    function getIdeaStatusLabel(status) {
+      const normalized = ideaStatuses.includes(status) ? status : "pending";
+      const key = normalized === "reviewing"
+        ? "ideaStatusReviewing"
+        : normalized === "accepted"
+          ? "ideaStatusAccepted"
+          : normalized === "declined"
+            ? "ideaStatusDeclined"
+            : "ideaStatusPending";
+      return t(key);
+    }
+
+    function normalizeIdea(row) {
+      if (!row) return null;
+      return {
+        id: row.id,
+        title: String(row.title || ""),
+        summary: String(row.summary || ""),
+        contribution: String(row.contribution || ""),
+        contactMethod: row.contact_method === "telegram" ? "telegram" : "discord",
+        contactValue: String(row.contact_value || ""),
+        status: ideaStatuses.includes(row.status) ? row.status : "pending",
+        adminNote: String(row.admin_note || ""),
+        createdAt: row.created_at || "",
+        updatedAt: row.updated_at || ""
+      };
+    }
+
+    function getIdeaErrorMessage(error) {
+      const message = String(error?.message || "");
+      const lowerMessage = message.toLowerCase();
+
+      if (!message) return t("ideaValidation");
+      if (
+        lowerMessage.includes("get_my_idea") ||
+        lowerMessage.includes("submit_idea") ||
+        lowerMessage.includes("schema cache") ||
+        lowerMessage.includes("function public.")
+      ) {
+        return t("ideaNoSupabase");
+      }
+      if (lowerMessage.includes("too many ideas") || lowerMessage.includes("please wait")) {
+        return t("ideaCooldown");
+      }
+      if (lowerMessage.includes("accepted or declined")) return t("ideaClosed");
+      if (lowerMessage.includes("bot check") || lowerMessage.includes("incomplete")) return t("ideaValidation");
+
+      return message;
+    }
+
+    function formatDate(value) {
+      if (!value) return "";
+      try {
+        return new Intl.DateTimeFormat(currentLanguage === "en" ? "en" : "ru", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(new Date(value));
+      } catch {
+        return String(value);
+      }
+    }
+
     function normalizeData(data) {
       const normalized = structuredClone(defaultData);
       normalized.profile = { ...normalized.profile, ...(data.profile || {}) };
@@ -1973,6 +2379,7 @@
       refs.loginAdmin.disabled = !supabaseClient;
       if (isLoggedIn) {
         syncAdminFieldsFromData();
+        loadAdminIdeas();
         setAdminStatus("Вход выполнен", "ready");
       } else if (supabaseClient) {
         setAdminStatus("Войди, чтобы редактировать", "warning");
@@ -2134,7 +2541,6 @@
         currentSession = session;
         setAdminAccess(currentSession);
       });
-
       await loadRemoteData();
     }
 
@@ -2179,6 +2585,12 @@
       refs.emptyTitle.textContent = t("emptyTitle");
       refs.emptyText.textContent = t("emptyText");
       refs.footer.textContent = t("footer");
+      document.querySelectorAll("[data-copy]").forEach(element => {
+        element.textContent = t(element.dataset.copy);
+      });
+      document.querySelectorAll("[data-placeholder]").forEach(element => {
+        element.setAttribute("placeholder", t(element.dataset.placeholder));
+      });
       refs.languageButtons.forEach(button => {
         const isCurrent = button.dataset.langChoice === currentLanguage;
         button.setAttribute("aria-pressed", String(isCurrent));
@@ -2199,6 +2611,11 @@
 
     function getCounts() {
       return filters.reduce((acc, filter) => {
+        if (filter.id === "ideas") {
+          acc[filter.id] = currentIdea ? 1 : 0;
+          return acc;
+        }
+
         acc[filter.id] = filter.id === "all"
           ? appData.projects.length
           : appData.projects.filter(project => project.status === filter.id).length;
@@ -2219,7 +2636,8 @@
         button.setAttribute("role", "radio");
         button.setAttribute("aria-checked", String(filter.id === state.filter));
         button.setAttribute("tabindex", filter.id === state.filter ? "0" : "-1");
-        button.innerHTML = `<span class="segmented__label"><span>${escapeHTML(label)}</span><span class="segmented__count" aria-label="${escapeHTML(projectCountLabel(counts[filter.id]))}">${counts[filter.id]}</span></span>`;
+        const countLabel = filter.id === "ideas" ? String(counts[filter.id]) : projectCountLabel(counts[filter.id]);
+        button.innerHTML = `<span class="segmented__label"><span>${escapeHTML(label)}</span><span class="segmented__count" aria-label="${escapeHTML(countLabel)}">${counts[filter.id]}</span></span>`;
         button.addEventListener("click", () => setFilter(filter.id, true));
         refs.statusFilter.appendChild(button);
       });
@@ -2229,6 +2647,7 @@
       state.filter = filterId;
       renderFilters();
       renderProjects();
+      if (filterId === "ideas") loadMyIdea();
       if (shouldFocus) refs.statusFilter.querySelector(`[data-filter="${filterId}"]`)?.focus();
     }
 
@@ -2241,6 +2660,7 @@
     }
 
     function getVisibleProjects() {
+      if (state.filter === "ideas") return [];
       const query = state.query.trim().toLowerCase();
       return appData.projects.filter(project => {
         const matchesFilter = state.filter === "all" || project.status === state.filter;
@@ -2270,6 +2690,20 @@
     }
 
     function renderProjects() {
+      const isIdeasView = state.filter === "ideas";
+      const searchControl = refs.search?.closest(".search");
+      refs.ideasPanel.hidden = !isIdeasView;
+      refs.projectList.hidden = isIdeasView;
+      if (searchControl) searchControl.hidden = isIdeasView;
+      if (refs.search) refs.search.disabled = isIdeasView;
+
+      if (isIdeasView) {
+        refs.projectsSummary.textContent = t("ideasSummary");
+        refs.emptyState.hidden = true;
+        renderIdeaPanel();
+        return;
+      }
+
       const visibleProjects = getVisibleProjects();
       refs.projectList.innerHTML = "";
 
@@ -2335,6 +2769,140 @@
       });
 
       refs.projectList.appendChild(fragment);
+    }
+
+    function setIdeaMessage(message, tone = "warning") {
+      refs.ideaMessage.textContent = message;
+      refs.ideaMessage.dataset.tone = tone;
+    }
+
+    function populateIdeaForm(idea) {
+      if (!idea) return;
+      refs.ideaTitle.value = idea.title;
+      refs.ideaSummary.value = idea.summary;
+      refs.ideaContribution.value = idea.contribution;
+      refs.ideaContactMethod.value = idea.contactMethod;
+      refs.ideaContactValue.value = idea.contactValue;
+    }
+
+    function renderIdeaPanel() {
+      refs.submitIdea.textContent = currentIdea ? t("ideaUpdateButton") : t("ideaSubmitButton");
+
+      if (!supabaseClient) {
+        refs.ideaStatusCard.hidden = true;
+        refs.submitIdea.disabled = true;
+        setIdeaMessage(t("ideaNoSupabase"), "danger");
+        return;
+      }
+
+      if (!currentIdea) {
+        refs.ideaStatusCard.hidden = true;
+        refs.submitIdea.disabled = false;
+        if (!refs.ideaMessage.textContent) setIdeaMessage("", "warning");
+        return;
+      }
+
+      const isClosed = currentIdea.status === "accepted" || currentIdea.status === "declined";
+      refs.ideaStatusCard.hidden = false;
+      refs.ideaStatusBody.innerHTML = `
+        <span class="idea-status-pill" data-status="${escapeHTML(currentIdea.status)}">${escapeHTML(getIdeaStatusLabel(currentIdea.status))}</span>
+        <div>
+          <h4 class="project-card__title" style="white-space: normal;">${escapeHTML(currentIdea.title)}</h4>
+          <p class="idea-status-card__text">${escapeHTML(currentIdea.summary)}</p>
+        </div>
+        <div class="idea-status-card__meta">
+          <span>${escapeHTML(t("ideaContact"))}: ${escapeHTML(currentIdea.contactMethod)} · ${escapeHTML(currentIdea.contactValue)}</span>
+          <span>${escapeHTML(t("ideaStatusUpdated"))}: ${escapeHTML(formatDate(currentIdea.updatedAt))}</span>
+          ${currentIdea.adminNote ? `<span>${escapeHTML(currentIdea.adminNote)}</span>` : ""}
+        </div>
+      `;
+
+      refs.submitIdea.disabled = isClosed;
+      setIdeaMessage(isClosed ? t("ideaClosed") : t("ideaLoaded"), isClosed ? "warning" : "ready");
+    }
+
+    async function loadMyIdea() {
+      if (!supabaseClient) {
+        renderIdeaPanel();
+        return;
+      }
+
+      const storedToken = getStoredIdeaToken();
+      if (!storedToken) {
+        currentIdea = null;
+        renderFilters();
+        renderIdeaPanel();
+        return;
+      }
+
+      const { data, error } = await supabaseClient.rpc("get_my_idea", {
+        p_edit_token: storedToken
+      });
+
+      if (error) {
+        currentIdea = null;
+        renderFilters();
+        renderIdeaPanel();
+        setIdeaMessage(getIdeaErrorMessage(error), "danger");
+        return;
+      }
+
+      currentIdea = normalizeIdea(Array.isArray(data) ? data[0] : data);
+      if (currentIdea) populateIdeaForm(currentIdea);
+      renderFilters();
+      renderIdeaPanel();
+    }
+
+    async function submitIdea(event) {
+      event.preventDefault();
+
+      if (!supabaseClient) {
+        setIdeaMessage(t("ideaNoSupabase"), "danger");
+        return;
+      }
+
+      const title = refs.ideaTitle.value.trim();
+      const summary = refs.ideaSummary.value.trim();
+      const contactValue = refs.ideaContactValue.value.trim();
+      if (title.length < 3 || summary.length < 20 || contactValue.length < 2) {
+        setIdeaMessage(t("ideaValidation"), "danger");
+        return;
+      }
+
+      const cooldownUntil = Number(localStorage.getItem(IDEA_COOLDOWN_KEY) || 0);
+      if (Date.now() < cooldownUntil) {
+        setIdeaMessage(t("ideaCooldown"), "danger");
+        return;
+      }
+
+      refs.submitIdea.disabled = true;
+      setIdeaMessage(currentIdea ? t("ideaUpdateButton") : t("ideaSubmitButton"), "warning");
+
+      const { data, error } = await supabaseClient.rpc("submit_idea", {
+        p_edit_token: getIdeaToken(),
+        p_title: title,
+        p_summary: summary,
+        p_contribution: refs.ideaContribution.value.trim(),
+        p_contact_method: refs.ideaContactMethod.value,
+        p_contact_value: contactValue,
+        p_started_at_ms: ideaFormStartedAt,
+        p_honeypot: refs.ideaWebsite.value
+      });
+
+      refs.submitIdea.disabled = false;
+      ideaFormStartedAt = Date.now();
+
+      if (error) {
+        setIdeaMessage(getIdeaErrorMessage(error), "danger");
+        return;
+      }
+
+      localStorage.setItem(IDEA_COOLDOWN_KEY, String(Date.now() + IDEA_LOCAL_COOLDOWN_MS));
+      currentIdea = normalizeIdea(Array.isArray(data) ? data[0] : data);
+      if (currentIdea) populateIdeaForm(currentIdea);
+      renderFilters();
+      renderIdeaPanel();
+      setIdeaMessage(t("ideaSaved"), "ready");
     }
 
     function openAdmin() {
@@ -2447,6 +3015,99 @@
       refs.adminProjectList.appendChild(fragment);
     }
 
+    function renderAdminIdeas() {
+      if (!refs.adminIdeasList) return;
+      refs.adminIdeasList.innerHTML = "";
+
+      if (!adminIdeas.length) {
+        const empty = document.createElement("li");
+        empty.className = "admin-idea-item";
+        empty.innerHTML = `<p class="admin-idea-item__text">${escapeHTML(t("ideaAdminEmpty"))}</p>`;
+        refs.adminIdeasList.appendChild(empty);
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      adminIdeas.forEach(idea => {
+        const item = document.createElement("li");
+        item.className = "admin-idea-item";
+        item.innerHTML = `
+          <div class="admin-idea-item__top">
+            <div>
+              <h4 class="admin-idea-item__title">${escapeHTML(idea.title)}</h4>
+              <p class="admin-idea-item__meta">${escapeHTML(idea.contactMethod)} · ${escapeHTML(idea.contactValue)} · ${escapeHTML(formatDate(idea.createdAt))}</p>
+            </div>
+            <span class="idea-status-pill" data-status="${escapeHTML(idea.status)}">${escapeHTML(getIdeaStatusLabel(idea.status))}</span>
+          </div>
+          <p class="admin-idea-item__text">${escapeHTML(idea.summary)}</p>
+          ${idea.contribution ? `<p class="admin-idea-item__text">${escapeHTML(idea.contribution)}</p>` : ""}
+          <div class="admin-actions-row">
+            <select data-idea-status="${escapeHTML(idea.id)}" aria-label="Статус идеи">
+              ${ideaStatuses.map(status => `<option value="${escapeHTML(status)}" ${status === idea.status ? "selected" : ""}>${escapeHTML(getIdeaStatusLabel(status))}</option>`).join("")}
+            </select>
+            <button class="admin-control admin-control--danger" type="button" data-delete-idea="${escapeHTML(idea.id)}">${escapeHTML(t("ideaDelete"))}</button>
+          </div>
+        `;
+        fragment.appendChild(item);
+      });
+      refs.adminIdeasList.appendChild(fragment);
+    }
+
+    async function loadAdminIdeas() {
+      if (!supabaseClient || !currentSession || !refs.adminIdeasList) return;
+      const { data, error } = await supabaseClient
+        .from("ideas")
+        .select("id,title,summary,contribution,contact_method,contact_value,status,admin_note,created_at,updated_at")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        setAdminStatus(error.message || "Не удалось загрузить идеи", "danger");
+        return;
+      }
+
+      adminIdeas = (data || []).map(normalizeIdea).filter(Boolean);
+      renderAdminIdeas();
+    }
+
+    async function updateIdeaStatus(ideaId, status) {
+      if (!supabaseClient || !currentSession || !ideaStatuses.includes(status)) return;
+      const { error } = await supabaseClient
+        .from("ideas")
+        .update({ status })
+        .eq("id", ideaId);
+
+      if (error) {
+        console.error(error);
+        setAdminStatus(error.message || "Не удалось обновить статус идеи", "danger");
+        return;
+      }
+
+      setAdminStatus(t("ideaStatusSaved"), "ready");
+      await loadAdminIdeas();
+      await loadMyIdea();
+    }
+
+    async function deleteIdea(ideaId) {
+      if (!supabaseClient || !currentSession) return;
+      if (!confirm(t("ideaDeleteConfirm"))) return;
+
+      const { error } = await supabaseClient
+        .from("ideas")
+        .delete()
+        .eq("id", ideaId);
+
+      if (error) {
+        console.error(error);
+        setAdminStatus(error.message || "Не удалось удалить идею", "danger");
+        return;
+      }
+
+      setAdminStatus(t("ideaDeleted"), "ready");
+      await loadAdminIdeas();
+      await loadMyIdea();
+    }
+
     function renderSelectedProjectEditor() {
       const project = getSelectedProject();
       if (!project) return;
@@ -2496,6 +3157,8 @@
       renderProjects();
     });
 
+    refs.ideaForm.addEventListener("submit", submitIdea);
+
     refs.openAdmin.addEventListener("click", openAdmin);
     refs.closeAdmin.addEventListener("click", closeAdmin);
     refs.saveAdmin.addEventListener("click", saveAdminChanges);
@@ -2533,7 +3196,21 @@
     refs.signOutAdmin.addEventListener("click", async () => {
       if (supabaseClient) await supabaseClient.auth.signOut();
       currentSession = null;
+      adminIdeas = [];
+      renderAdminIdeas();
       setAdminAccess(null);
+    });
+
+    refs.adminIdeasList.addEventListener("change", event => {
+      const select = event.target.closest("[data-idea-status]");
+      if (!select) return;
+      updateIdeaStatus(select.dataset.ideaStatus, select.value);
+    });
+
+    refs.adminIdeasList.addEventListener("click", event => {
+      const button = event.target.closest("[data-delete-idea]");
+      if (!button) return;
+      deleteIdea(button.dataset.deleteIdea);
     });
 
     refs.adminBackdrop.addEventListener("click", event => {
