@@ -953,6 +953,11 @@
       line-height: var(--lh-caption);
       font-weight: 740;
       font-variant-numeric: tabular-nums;
+      color: var(--text-3);
+    }
+
+    .feedback-button.is-active[data-feedback-vote="1"] .feedback-count {
+      color: rgba(96, 222, 128, 0.98);
     }
 
     .feedback-count--private {
@@ -1966,7 +1971,7 @@
           status: "in-progress",
           progress: 50,
           release: "релиз · июль 2026",
-          sourceUrl: "https://github.com/wellqx/osureplay",
+          sourceUrl: "",
           tags: ["osu!", "replay", "mp4"]
         },
         {
@@ -1978,7 +1983,7 @@
           status: "in-progress",
           progress: 20,
           release: "релиз · 2027",
-          sourceUrl: "https://github.com/wellqx/mania_coach",
+          sourceUrl: "",
           tags: ["osu!mania", "python", "local-only"]
         },
         {
@@ -2404,6 +2409,14 @@
         : project;
     }
 
+    function normalizeSourceUrl(projectId, value) {
+      const sourceUrl = String(value || "").trim();
+      if (!/^https?:\/\//i.test(sourceUrl)) return "";
+      if (projectId === "osureplay" && sourceUrl === "https://github.com/wellqx/osureplay") return "";
+      if (projectId === "osu-assistant" && sourceUrl === "https://github.com/wellqx/mania_coach") return "";
+      return sourceUrl;
+    }
+
     function getIdeaToken() {
       return getClientToken(IDEA_TOKEN_KEY);
     }
@@ -2616,7 +2629,7 @@
               ? fallbackProject.progress
               : null,
           release: repairMojibakeText(project.release || fallbackProject?.release || ""),
-          sourceUrl: String(project.sourceUrl || fallbackProject?.sourceUrl || ""),
+          sourceUrl: normalizeSourceUrl(id, project.sourceUrl),
           tags: Array.isArray(project.tags) ? project.tags.map(repairMojibakeText) : fallbackProject?.tags || []
         };
       }) : normalized.projects;
@@ -2687,7 +2700,7 @@
         status: row.status || "pending",
         progress: typeof row.progress === "number" ? row.progress : null,
         release: repairMojibakeText(row.release),
-        sourceUrl: row.source_url || "",
+        sourceUrl: normalizeSourceUrl(row.id, row.source_url),
         tags: Array.isArray(row.tags) ? row.tags.map(repairMojibakeText) : []
       };
     }
@@ -2716,7 +2729,7 @@
         status: project.status,
         progress: typeof project.progress === "number" ? project.progress : null,
         release: project.release || "",
-        source_url: project.sourceUrl || "",
+        source_url: normalizeSourceUrl(project.id, project.sourceUrl),
         tags: project.tags,
         sort_order: (index + 1) * 10
       };
@@ -3106,7 +3119,8 @@
 
         const progressId = `progress-${project.id}`;
         const titleId = `title-${project.id}`;
-        const hasSource = Boolean(project.sourceUrl);
+        const sourceUrl = normalizeSourceUrl(project.id, project.sourceUrl);
+        const hasSource = Boolean(sourceUrl);
         const hasProgress = typeof project.progress === "number" && project.progress > 0 && project.progress < 100;
         const feedback = getFeedbackStats(project.id);
         const currentVote = Number(projectFeedbackVotes[project.id] || 0);
@@ -3155,7 +3169,7 @@
                   ${thumbIcon("down")}${showPrivateFeedback ? `<span class="feedback-count feedback-count--private">${feedback.dislikes}</span>` : ""}
                 </button>
               </div>
-              ${hasSource ? `<a class="source-link" href="${escapeHTML(project.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHTML(t("openSourceFor"))} ${escapeHTML(localizedProject.title)}">${escapeHTML(t("source"))}<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7" /><path d="M9 7h8v8" /></svg></a>` : `<span class="source-link" aria-disabled="true">${escapeHTML(t("sourceSoon"))}</span>`}
+              ${hasSource ? `<a class="source-link" href="${escapeHTML(sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHTML(t("openSourceFor"))} ${escapeHTML(localizedProject.title)}">${escapeHTML(t("source"))}<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7" /><path d="M9 7h8v8" /></svg></a>` : `<span class="source-link" aria-disabled="true">${escapeHTML(t("sourceSoon"))}</span>`}
             </div>
           </article>
         `;
