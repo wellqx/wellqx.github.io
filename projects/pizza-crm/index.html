@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>pizza crm — wellqx</title>
+  <meta name="description" content="pizza crm — online POS &amp; store management for a pizzeria, running in the browser via WASM.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Anton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-page="other">
+  <div id="webgl" aria-hidden="true"></div>
+  <div id="lights" aria-hidden="true"></div>
+
+  <header class="l-header">
+    <div class="l-header__inner">
+      <nav class="l-header__nav l-header__nav--left" aria-label="Primary">
+        <div class="item"><a href="/projects/" class="item__link">PROJECTS</a></div>
+        <div class="item"><a href="/about/" class="item__link">ABOUT</a></div>
+      </nav>
+      <div class="l-header__logo">
+        <a class="logo" href="/" aria-label="Home"><span class="logo__mark">wq<span class="dot">.</span></span></a>
+      </div>
+      <nav class="l-header__nav l-header__nav--right" aria-label="Secondary">
+        <div class="item"><a href="/playground/" class="item__link">PLAYGROUND</a></div>
+        <div class="item has-dropdown">
+          <button class="item__link contact" type="button" aria-expanded="false" aria-label="Contact">CONTACT</button>
+          <div class="innerLink">
+            <div class="innerlink__item"><a href="https://github.com/wellqx" target="_blank" rel="noopener">GITHUB</a></div>
+          </div>
+        </div>
+      </nav>
+      <div class="l-header__menu-sp">
+        <div class="item has-dropdown">
+          <button class="item__link menu" type="button" aria-expanded="false" aria-label="Menu">MENU</button>
+          <div class="innerLink innerLink--menu">
+            <div class="innerlink__item"><a href="/projects/">PROJECTS</a></div>
+            <div class="innerlink__item"><a href="/about/">ABOUT</a></div>
+            <div class="innerlink__item"><a href="/playground/">PLAYGROUND</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="l-main">
+    <div class="l-main__inner">
+
+      <div class="l-project">
+        <div class="p-title" aria-hidden="true">pizza crm</div>
+
+        <div class="titleMeta">
+          <div class="titleMeta__bottom">
+            <span class="titleMeta__year">03 — 03</span>
+          </div>
+          <div class="titleMeta__role">pizzeria pos · php wasm / sqlite</div>
+        </div>
+
+        <div class="scroller" aria-hidden="true">
+          <span class="scroller__label">Scroll</span>
+          <span class="scroller__inner"><span class="bar"></span></span>
+        </div>
+
+        <div class="titleWrap"></div>
+
+        <div class="flex">
+          <div class="flex__left">
+            <p class="flex__overview reveal">Overview</p>
+            <h1 class="flex__name reveal">PIZZA&nbsp;CRM</h1>
+          </div>
+          <div class="detail">
+            <div class="detail__item" style="--reveal-delay:60">
+              <span class="detail__label">Overview</span>
+              <span class="detail__val">A full online <strong>point-of-sale and store management</strong> for a pizzeria — orders, cash register, stock, reports and a public storefront. The whole app runs straight in the browser: PHP 8 + SQLite compiled to WebAssembly, no server needed.</span>
+            </div>
+            <div class="detail__item" style="--reveal-delay:160">
+              <span class="detail__label">Stack</span>
+              <span class="detail__val">PHP 8 · SQLite · PHP-WASM · no frameworks</span>
+            </div>
+            <div class="detail__item" style="--reveal-delay:260">
+              <span class="detail__label">Platform</span>
+              <span class="detail__val">Web — runs in the browser, demo hosted on GitHub Pages</span>
+            </div>
+            <div class="detail__item" style="--reveal-delay:360">
+              <span class="detail__label">Modules</span>
+              <span class="detail__val">POS · Orders · Stock · Reports · Storefront</span>
+            </div>
+            <div class="detail__launch">
+              <span class="detail__label">Links</span>
+              <a href="https://golivehub.github.io/forno-pizza-crm/" target="_blank" rel="noopener">
+                <span>LIVE DEMO →</span>
+              </a>
+              <a href="https://github.com/GoLiveHub/forno-pizza-crm" target="_blank" rel="noopener" style="margin-top:.75rem">
+                <span>GITHUB →</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <section class="section">
+          <p class="sectionLabel">About</p>
+          <p class="lead reveal">
+            A cash register that boots inside a browser tab — <span class="hl">50 MB of PHP + SQLite compiled to WASM</span>, hosted on static pages with a service worker.
+          </p>
+
+          <div class="featureRows">
+            <div class="featureRow" style="--delay:50">
+              <span class="featureRow__num">01</span>
+              <div>
+                <p class="featureRow__title">Point of sale</p>
+                <p class="featureRow__text">Take orders and payment from a single screen — tickets, totals and change handled live.</p>
+              </div>
+              <span class="featureRow__tag">POS</span>
+            </div>
+            <div class="featureRow" style="--delay:130">
+              <span class="featureRow__num">02</span>
+              <div>
+                <p class="featureRow__title">Stock control</p>
+                <p class="featureRow__text">Track ingredients and keep shelves full before the flour runs out at 8 pm on a Friday.</p>
+              </div>
+              <span class="featureRow__tag">Stock</span>
+            </div>
+            <div class="featureRow" style="--delay:210">
+              <span class="featureRow__num">03</span>
+              <div>
+                <p class="featureRow__title">Reports</p>
+                <p class="featureRow__text">Daily revenue, order history and simple analytics to see which pizzas actually sell.</p>
+              </div>
+              <span class="featureRow__tag">Reports</span>
+            </div>
+            <div class="featureRow" style="--delay:290">
+              <span class="featureRow__num">04</span>
+              <div>
+                <p class="featureRow__title">Storefront + demo mode</p>
+                <p class="featureRow__text">A public menu and storefront with a demo mode built for fully static hosting.</p>
+              </div>
+              <span class="featureRow__tag">Demo</span>
+            </div>
+            <div class="featureRow" style="--delay:370">
+              <span class="featureRow__num">05</span>
+              <div>
+                <p class="featureRow__title">WASM runtime</p>
+                <p class="featureRow__text">Backed by a PHP 8.4 + SQLite WASM runtime — no containers, no backend, one static deploy.</p>
+              </div>
+              <span class="featureRow__tag">Runtime</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <p class="sectionLabel">Interface</p>
+          <div class="mockWrap">
+            <div class="mock reveal">
+              <div class="mock__bar">
+                <span class="mb"></span><span class="mb"></span><span class="mb"></span>
+                <span class="url">forno-crm — POS</span>
+              </div>
+              <div class="mock__body">
+                <div class="pos">
+                  <div class="pos__ticket">
+                    <div class="pos__line"><span><span class="q">×2</span>Margherita</span><span>$22.00</span></div>
+                    <div class="pos__line"><span><span class="q">×1</span>Pepperoni</span><span>$14.50</span></div>
+                    <div class="pos__line"><span><span class="q">×1</span>Cola</span><span>$3.00</span></div>
+                    <div class="pos__line"><span><span class="q">×1</span>Tiramisu</span><span>$5.50</span></div>
+                    <div class="pos__line total"><span>ORDER #042</span><span>$45.00</span></div>
+                  </div>
+                  <div>
+                    <span class="m-hud__label">REVENUE · TODAY</span>
+                    <span class="m-hud__value">$1,284</span>
+                    <span class="m-chart">
+                      <span class="bar" style="height:38%"></span>
+                      <span class="bar" style="height:55%"></span>
+                      <span class="bar" style="height:42%"></span>
+                      <span class="bar" style="height:70%"></span>
+                      <span class="bar" style="height:52%"></span>
+                      <span class="bar" style="height:88%"></span>
+                      <span class="bar" style="height:64%"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="nextWrap">
+          <div class="nextWrap__topbar">
+            <div class="nextWrap__topbar-label"><span class="dash"></span><span>Next project</span></div>
+            <div class="nextWrap__topbar-index"><span class="cur">01</span><span class="sep">/</span><span>03</span></div>
+          </div>
+          <a class="nextWrap__inner" href="/projects/wellnet/">
+            <div class="nextWrap__row">
+              <div class="nextWrap__circle">
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48.1"></circle><circle class="is-progress" cx="50" cy="50" r="48.1"></circle></svg>
+                <div class="nextWrap__counter"><span class="num" data-dur="1">000</span><span class="unit">NEXT</span></div>
+              </div>
+              <div class="nextWrap__textwrap">
+                <p class="nextWrap__text">Next project</p>
+                <span class="nextWrap__project">wellnet</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="l-footer">
+    <div class="l-inner">
+      <div class="switcher" role="group" aria-label="Lights out" data-lights-idle id="js-lights-btn">
+        <button class="switcher__toggle" type="button" aria-label="Toggle lights"><span class="switcher__thumb" aria-hidden="true"></span></button>
+        <span class="switcher__label">SHIFT</span>
+      </div>
+      <div class="sns">
+        <div class="sns__item">
+          <a href="https://github.com/wellqx" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            <span>github</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/webgl.js"></script>
+</body>
+</html>

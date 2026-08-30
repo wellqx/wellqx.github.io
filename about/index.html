@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — wellqx</title>
+  <meta name="description" content="About wellqx — developer, vibe coder, maker of Minecraft mods and web apps.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Anton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-page="other">
+  <div id="webgl" aria-hidden="true"></div>
+  <div id="lights" aria-hidden="true"></div>
+
+  <header class="l-header">
+    <div class="l-header__inner">
+      <nav class="l-header__nav l-header__nav--left" aria-label="Primary">
+        <div class="item"><a href="/projects/" class="item__link">PROJECTS</a></div>
+        <div class="item"><a href="/about/" class="item__link is-current">ABOUT</a></div>
+      </nav>
+      <div class="l-header__logo">
+        <a class="logo" href="/" aria-label="Home"><span class="logo__mark">wq<span class="dot">.</span></span></a>
+      </div>
+      <nav class="l-header__nav l-header__nav--right" aria-label="Secondary">
+        <div class="item"><a href="/playground/" class="item__link">PLAYGROUND</a></div>
+        <div class="item has-dropdown">
+          <button class="item__link contact" type="button" aria-expanded="false" aria-label="Contact">CONTACT</button>
+          <div class="innerLink">
+            <div class="innerlink__item"><a href="https://github.com/wellqx" target="_blank" rel="noopener">GITHUB</a></div>
+          </div>
+        </div>
+      </nav>
+      <div class="l-header__menu-sp">
+        <div class="item has-dropdown">
+          <button class="item__link menu" type="button" aria-expanded="false" aria-label="Menu">MENU</button>
+          <div class="innerLink innerLink--menu">
+            <div class="innerlink__item"><a href="/projects/">PROJECTS</a></div>
+            <div class="innerlink__item"><a href="/about/">ABOUT</a></div>
+            <div class="innerlink__item"><a href="/playground/">PLAYGROUND</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="l-main">
+    <div class="l-main__inner">
+
+      <div class="l-about">
+
+        <div class="hero">
+          <div class="hero__content">
+            <div>
+              <p class="hero__tag reveal-live">About</p>
+              <h1 class="hero__name-inner reveal-live">wellqx<span class="accent">.</span></h1>
+            </div>
+            <div class="hero__right">
+              <p class="hero__years-num reveal-live">3</p>
+              <p class="hero__years-label reveal-live">projects built</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="contentSection contentSection--first">
+          <div class="aboutGrid">
+            <p class="aboutGrid__en reveal">CODE &amp;<br><strong>VIBE</strong></p>
+            <p class="aboutGrid__jp">
+              I'm a software developer who takes a rough idea and ships it as a polished product, end to end — from Minecraft mods and web apps to a cash register that boots in a browser tab. I like sharp, purpose-built tools that quietly do their job.<br><br>
+              Right now I'm focused on three things — a <a href="/projects/wellnet/">Minecraft mod</a> that keeps heavy modpacks smooth, a <a href="/projects/travel/">hotel booking platform</a>, and a <a href="/projects/pizza-crm/">pizzeria POS</a>. I also enjoy pushing interactive experiments on the <a href="/playground/">playground</a>.<br><br>
+              Open to freelance and collaborations. Everything I make is on <a href="https://github.com/wellqx" target="_blank" rel="noopener">GitHub</a>.
+            </p>
+          </div>
+        </section>
+
+        <section class="contentSection contentSection--second">
+          <p class="sectionLabel reveal">Projects — 2026</p>
+
+          <div class="currentGrid">
+            <a class="currentItem reveal" href="/projects/wellnet/">
+              <span class="currentItem__num">01</span>
+              <h2 class="currentItem__title">mcm wellnet</h2>
+              <span class="currentItem__sub">client-side minecraft mod · keeps heavy modpacks smooth</span>
+              <span class="currentItem__arrow">→</span>
+            </a>
+            <a class="currentItem reveal reveal-delay-1" href="/projects/travel/">
+              <span class="currentItem__num">02</span>
+              <h2 class="currentItem__title">travel</h2>
+              <span class="currentItem__sub">hotel search &amp; booking · php + tailwind</span>
+              <span class="currentItem__arrow">→</span>
+            </a>
+            <a class="currentItem currentItem--accent reveal reveal-delay-2" href="/projects/pizza-crm/">
+              <span class="currentItem__num">03</span>
+              <h2 class="currentItem__title">pizza crm</h2>
+              <span class="currentItem__sub">pizzeria pos · runs in the browser via wasm</span>
+              <span class="currentItem__arrow">→</span>
+            </a>
+            <div class="currentItem reveal reveal-delay-2">
+              <span class="currentItem__num">—</span>
+              <h2 class="currentItem__title">Let's build the next one</h2>
+              <span class="currentItem__sub">open to freelance &amp; collaboration</span>
+              <span class="currentItem__arrow">✦</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="about-footer">
+          <div class="about-footer__meta reveal">
+            <span class="about-footer__meta-label">wellqx</span>
+            <span class="about-footer__meta-info">
+              <span>available</span>
+              <span class="about-footer__avail">● open for work</span>
+            </span>
+          </div>
+
+          <div class="about-footer__marquee-wrap">
+            <div class="about-footer__marquee" aria-hidden="true">
+              <div class="about-footer__marquee-track js-marquee-track">
+                <span>wellqx<span class="marquee-at">.</span></span>
+                <span class="marquee-star">
+                  <svg viewBox="0 0 24 24" class="about-footer__star"><path fill="currentColor" d="M12 0l2.6 7.6L22 9.3l-6.1 4.9L17.8 22 12 17.7 6.2 22l1.9-7.8L2 9.3l7.4-1.7z"/></svg>
+                </span>
+                <span>available for work</span>
+                <span class="marquee-star">
+                  <svg viewBox="0 0 24 24" class="about-footer__star"><path fill="currentColor" d="M12 0l2.6 7.6L22 9.3l-6.1 4.9L17.8 22 12 17.7 6.2 22l1.9-7.8L2 9.3l7.4-1.7z"/></svg>
+                </span>
+                <span>vibe coder<span class="marquee-at">.</span></span>
+                <span class="marquee-star">
+                  <svg viewBox="0 0 24 24" class="about-footer__star"><path fill="currentColor" d="M12 0l2.6 7.6L22 9.3l-6.1 4.9L17.8 22 12 17.7 6.2 22l1.9-7.8L2 9.3l7.4-1.7z"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-footer__actions">
+            <a class="about-footer__github" href="https://github.com/wellqx" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+              github/wellqx
+            </a>
+            <p class="about-footer__copyright">
+              made by <span class="light">wellqx</span><br>© 2026
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="l-footer">
+    <div class="l-inner">
+      <div class="switcher" role="group" aria-label="Lights out" data-lights-idle id="js-lights-btn">
+        <button class="switcher__toggle" type="button" aria-label="Toggle lights"><span class="switcher__thumb" aria-hidden="true"></span></button>
+        <span class="switcher__label">SHIFT</span>
+      </div>
+      <div class="sns">
+        <div class="sns__item">
+          <a href="https://github.com/wellqx" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            <span>github</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/webgl.js"></script>
+</body>
+</html>
